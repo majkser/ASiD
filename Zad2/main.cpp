@@ -17,9 +17,9 @@ int main()
         cout << v[i] << " ";
     }
 
-    insertionSort(v, sizeOfV);
+    bubbleSort(v, sizeOfV);
 
-    cout << "\ntablica posortowana algorytmem insertionSort: ";
+    cout << "\ntablica posortowana algorytmem bubbleSort: ";
 
     for (int i = 0; i < sizeOfV; i++)
     {
@@ -36,17 +36,17 @@ int main()
     }
 }
 
-void insertionSort(vector<int> &v, int sizeOfV)
+void bubbleSort(vector<int> &v, int sizeOfV)
 {
-    for (int i = 0; i < (sizeOfV -  1); i++)
+    for (int i = 0; i < sizeOfV - 1; i++)
     {
-        for (int j = i + 1; j < sizeOfV; j++)
+        for (int j = 0; j < sizeOfV - 1 - i; j++)
         {
-            if (v[i] > v[j])
+            if (v[j] > v[j + 1])
             {
-                int temp = v[i];
-                v[i] = v[j];
-                v[j] = temp;
+                int temp = v[j];
+                v[j] = v[j + 1];
+                v[j + 1] = temp;
             }
         }
     }
