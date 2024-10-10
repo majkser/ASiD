@@ -2,15 +2,18 @@
 #include "vector"
 using namespace std;
 
-void bubbleSort(vector<int> &v, int sizeOfV);
-void quickSort(vector<int> &v, int low, int sizeOfV);
+template <typename T>
+void bubbleSort(vector<T> &v, int sizeOfV);
+
+template <typename T>
+void quickSort(vector<T> &v, int low, int sizeOfV);
 
 int main()
 {
     vector<int> v = {69, 17, 42, 13, 99, 88, 77, 66, 55, 44, 33, 22, 11};
     int sizeOfV = v.size();
 
-    cout << "tablica przed posortowaniem: ";
+    cout << "przykładowy vector intów przed posortowaniem: ";
 
     for (int i = 0; i < sizeOfV; i++)
     {
@@ -19,7 +22,7 @@ int main()
 
     bubbleSort(v, sizeOfV);
 
-    cout << "\ntablica posortowana algorytmem bubbleSort: ";
+    cout << "\nvector po posortowaniu algorytmem bubbleSort: ";
 
     for (int i = 0; i < sizeOfV; i++)
     {
@@ -28,7 +31,7 @@ int main()
 
     quickSort(v, 0, sizeOfV - 1);
 
-    cout << "\ntablica posortowana algorytmem quickSort: ";
+    cout << "\nvector po posortowaniu algorytmem quickSort: ";
 
     for (int i = 0; i < sizeOfV; i++)
     {
@@ -36,7 +39,8 @@ int main()
     }
 }
 
-void bubbleSort(vector<int> &v, int sizeOfV)
+template <typename T>
+void bubbleSort(vector<T>& v, int sizeOfV)
 {
     for (int i = 0; i < sizeOfV - 1; i++)
     {
@@ -44,7 +48,7 @@ void bubbleSort(vector<int> &v, int sizeOfV)
         {
             if (v[j] > v[j + 1])
             {
-                int temp = v[j];
+                T temp = v[j];
                 v[j] = v[j + 1];
                 v[j + 1] = temp;
             }
@@ -52,11 +56,12 @@ void bubbleSort(vector<int> &v, int sizeOfV)
     }
 }
 
-void quickSort(vector<int> &v, int low, int sizeOfV)
+template <typename T>
+void quickSort(vector<T> &v, int low, int sizeOfV)
 {
     if (low < sizeOfV)
     {
-        int pivot = v[sizeOfV];
+        T pivot = v[sizeOfV];
         int i = low - 1;
 
         for (int j = low; j < sizeOfV; j++)
@@ -64,13 +69,13 @@ void quickSort(vector<int> &v, int low, int sizeOfV)
             if (v[j] < pivot)
             {
                 i++;
-                int temp = v[i];
+                T temp = v[i];
                 v[i] = v[j];
                 v[j] = temp;
             }
         }
 
-        int temp = v[i + 1];
+        T temp = v[i + 1];
         v[i + 1] = v[sizeOfV];
         v[sizeOfV] = temp;
 
