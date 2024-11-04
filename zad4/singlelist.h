@@ -1,6 +1,7 @@
 // singlelist.h
 
 #ifndef SINGLELIST_H
+
 #define SINGLELIST_H
 
 #include <iostream> // deklaracje strumieni cout, cin, cerr
