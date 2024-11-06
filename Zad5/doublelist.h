@@ -77,8 +77,8 @@ public:
 
     std::size_t size() const
     {
-    std:
-        size_t counter = 0;
+
+        std::size_t counter = 0;
 
         DoubleNode<T> *current = head;
 
@@ -106,7 +106,7 @@ public:
         }
     } // O(1)
 
-    void push_front(T &&item); // O(1) NIEOBOWIAZKOWE
+    // void push_front(T &&item); // O(1) NIEOBOWIAZKOWE
 
     void push_back(const T &item)
     {
@@ -123,17 +123,15 @@ public:
         }
     } // O(1)
 
-    void push_back(T &&item); // O(1) NIEOBOWIAZKOWE
+    // void push_back(T &&item); // O(1) NIEOBOWIAZKOWE
 
     T &front() const
     {
-        assert(empty() && "List is empty!");
         return head->value;
     } // zwraca poczatek, nie usuwa
 
     T &back() const
     {
-        assert(empty() && "List is empty!");
         return tail->value;
     } // zwraca koniec, nie usuwa
 
@@ -144,11 +142,14 @@ public:
         if (!empty())
         {
             head = head->next;
-            head->prev = nullptr;
+
+            if (head != nullptr)
+            {
+                head->prev = nullptr;
+            }
+
             delete current;
         }
-
-        assert(empty() && "List is empty!");
 
     } // usuwa poczatek O(1)
 
@@ -159,11 +160,15 @@ public:
         if (!empty())
         {
             tail = tail->prev;
-            tail->next = nullptr;
+
+            if (tail != nullptr)
+            {
+                tail->next = nullptr;
+            }
+
             delete current;
         }
 
-        assert(empty() && "List is empty!");
     } // usuwa koniec O(1)
 
     void clear()
@@ -184,8 +189,6 @@ public:
 
             current = current->next;
         }
-
-        std::cout << std::endl;
     } // O(n)
 
     void display_reversed()
@@ -199,47 +202,19 @@ public:
             current = current->prev;
         }
 
-        std::cout << std::endl;
     } // O(n)
 
     // Operacje z indeksami. NIEOBOWIAZKOWE
-    T &operator[](std::size_t pos);             // podstawienie L[pos]=item, odczyt L[pos]
+    /*T &operator[](std::size_t pos);             // podstawienie L[pos]=item, odczyt L[pos]
     const T &operator[](std::size_t pos) const; // dostep do obiektu const
     void erase(std::size_t pos);
     int index(const T &item);                    // jaki index na liscie (-1 gdy nie ma) O(n)
     void insert(std::size_t pos, const T &item); // inserts item before pos,
-    void insert(std::size_t pos, T &&item);      // inserts item before pos,
+    void insert(std::size_t pos, T &&item);*/
+    // inserts item before pos,
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
 };
-
-template <typename T>
-void DoubleList<T>::push_front(const T &item)
-{
-    if (!empty())
-    {
-        head = new DoubleNode<T>(item, head);
-        head->next->prev = head;
-    }
-    else
-    {
-        head = tail = new DoubleNode<T>(item);
-    }
-}
-
-template <typename T>
-void DoubleList<T>::push_front(T &&item)
-{
-    if (!empty())
-    {
-        head = new DoubleNode<T>(std::move(item), head);
-        head->next->prev = head;
-    }
-    else
-    {
-        head = tail = new DoubleNode<T>(std::move(item));
-    }
-}
 
 #endif
 
