@@ -14,7 +14,7 @@ int main()
     std::vector<std::string> input{"-6", "+2", "/"};
     assert(rpn(input) == -3);
 
-    std::cout << rpn(input);
+    std::cout << "Wynik działania -6, +2, / w ONP: " << rpn(input) << std::endl;
 
     return 0;
 }
