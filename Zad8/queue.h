@@ -14,10 +14,10 @@ private:
 public:
     Queue() = default;
 
-    // Queue(const Queue &other)
-    // {
-    //     myQueue = other.myQueue;
-    // } // copy constructor
+    Queue(const Queue &other)
+    {
+        myQueue = other.myQueue;
+    } // copy constructor
 
     Queue &operator=(const Queue &other)
     {
@@ -34,7 +34,7 @@ public:
         return myQueue.empty();
     }
 
-    int size()
+    size_t size()
     {
         return myQueue.size();
     }
@@ -42,20 +42,24 @@ public:
     void push(const T &item)
     {
         myQueue.push_back(item);
+        assert(!myQueue.empty() && "queue should not be empty after push");
     }
 
     T &front()
     {
+        assert(!myQueue.empty() && "Cannot access front of an empty queue");
         return myQueue.front();
     }
 
     T &back()
     {
+        assert(!myQueue.empty() && "Cannot access back of an empty queue");
         return myQueue.back();
     }
 
     void pop()
     {
+        assert(!myQueue.empty() && "Cannot pop from an empty queue");
         myQueue.pop_front();
     }
 
