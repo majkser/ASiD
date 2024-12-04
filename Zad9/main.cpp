@@ -14,7 +14,7 @@ int main()
     pq.push(4);
     pq.push(2);
     pq.push(5);
-    std::cout << "After pushing 3,1,4,2,5: ";
+    std::cout << "After pushing: ";
     pq.display();
 
     std::cout << "Testing copy constructor:\n";

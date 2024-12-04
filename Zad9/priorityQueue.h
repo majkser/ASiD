@@ -2,7 +2,6 @@
 #define PRIORITYQUEUE_H
 
 #include <iostream>
-#include <memory>
 
 template <typename T>
 class PriorityQueue
@@ -11,116 +10,124 @@ private:
     struct Node
     {
         T data;
-        std::unique_ptr<Node> next;
-
+        Node *next;
         Node(const T &value) : data(value), next(nullptr) {}
     };
 
-    std::unique_ptr<Node> head;
+    Node *head;
 
 public:
-    PriorityQueue() = default;
+    PriorityQueue() : head(nullptr) {}
 
-    PriorityQueue(const PriorityQueue &other)
+    ~PriorityQueue()
+    {
+        clear();
+    }
+
+    PriorityQueue(const PriorityQueue &other) : head(nullptr)
     {
         if (other.head)
         {
-            head = std::make_unique<Node>(other.head->data);
-            Node *current = head.get();
-            Node *otherCurrent = other.head->next.get();
+            head = new Node(other.head->data);
+            Node *current = head;
+            Node *otherCurrent = other.head->next;
 
             while (otherCurrent)
             {
-                current->next = std::make_unique<Node>(otherCurrent->data);
-                current = current->next.get();
-                otherCurrent = otherCurrent->next.get();
+                current->next = new Node(otherCurrent->data);
+                current = current->next;
+                otherCurrent = otherCurrent->next;
             }
         }
-    } // copy constructor
+    }
 
     PriorityQueue &operator=(const PriorityQueue &other)
     {
         if (this != &other)
         {
-            head.reset();
-
+            clear();
             if (other.head)
             {
-                head = std::make_unique<Node>(other.head->data);
-                Node *current = head.get();
-                Node *otherCurrent = other.head->next.get();
+                head = new Node(other.head->data);
+                Node *current = head;
+                Node *otherCurrent = other.head->next;
 
                 while (otherCurrent)
                 {
-                    current->next = std::make_unique<Node>(otherCurrent->data);
-                    current = current->next.get();
-                    otherCurrent = otherCurrent->next.get();
+                    current->next = new Node(otherCurrent->data);
+                    current = current->next;
+                    otherCurrent = otherCurrent->next;
                 }
             }
         }
         return *this;
-    } // Copy assignment operator, return *this
+    }
 
     void push(const T &value)
     {
         if (!head || value > head->data)
         {
-            auto newNode = std::make_unique<Node>(value);
-            newNode->next = std::move(head);
-            head = std::move(newNode);
+            Node *newNode = new Node(value);
+            newNode->next = head;
+            head = newNode;
             return;
         }
 
-        Node *current = head.get();
+        Node *current = head;
         while (current->next && value <= current->next->data)
         {
-            current = current->next.get();
+            current = current->next;
         }
-
-        auto newNode = std::make_unique<Node>(value);
-        newNode->next = std::move(current->next);
-        current->next = std::move(newNode);
+        Node *newNode = new Node(value);
+        newNode->next = current->next;
+        current->next = newNode;
     }
 
     void pop()
     {
-        if (head)
+        if (!head)
         {
-            head = std::move(head->next);
+            throw std::runtime_error("Priority queue is empty");
         }
+        Node *temp = head;
+        head = head->next;
+        delete temp;
     }
 
     T top() const
     {
         if (!head)
         {
-            throw std::out_of_range("Priority queue is empty");
+            throw std::runtime_error("Priority queue is empty");
         }
         return head->data;
     }
 
     bool empty() const
     {
-        return !head;
+        return head == nullptr;
     }
 
     void clear()
     {
-        head.reset();
+        while (head)
+        {
+            Node *temp = head;
+            head = head->next;
+            delete temp;
+        }
     }
 
-    void display()
+    void display() const
     {
-        Node *current = head.get();
-
-        while (current != nullptr)
+        Node *current = head;
+        while (current)
         {
             std::cout << current->data << " ";
-            current = current->next.get();
+            current = current->next;
         }
-
         std::cout << std::endl;
     }
 };
 
-#endif // PRIORITYQUEUE_H
+#endif
