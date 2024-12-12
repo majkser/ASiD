@@ -1,0 +1,78 @@
+#ifndef RANDOMBINARYTREE_H
+#define RANDOMBINARYTREE_H
+
+#include <iostream>
+#include <cassert>
+#include <cstdlib>
+#include <ctime>
+
+// Szablon dla przypadkowego drzewa binarnego.
+template <typename T>
+struct BSTNode
+{
+    T value;
+    BSTNode *left;
+    BSTNode *right;
+
+    BSTNode(const T &val) : value(val), left(nullptr), right(nullptr) {}
+    ~BSTNode()
+    {
+        delete left;
+        delete right;
+    }
+};
+
+template <typename T>
+class RandomBinaryTree
+{
+    BSTNode<T> *root;
+    BSTNode<T> *insert(BSTNode<T> *node, const T &item);
+    void display(BSTNode<T> *node, int level);
+
+public:
+    RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
+    ~RandomBinaryTree() { delete root; }  // trzeba wyczyścić (rekurencyjnie)
+    void clear()
+    {
+        delete root;
+        root = nullptr;
+    }
+    bool empty() const { return root == nullptr; }
+    T &top()
+    {
+        assert(root != nullptr);
+        return root->value;
+    } // podgląd korzenia
+    void insert(const T &item) { root = insert(root, item); }
+    void display() { display(root, 0); }
+};
+
+template <typename T>
+BSTNode<T> *RandomBinaryTree<T>::insert(BSTNode<T> *node, const T &item)
+{
+    if (node == nullptr)
+    {
+        return new BSTNode<T>(item);
+    }
+    if (std::rand() % 2)
+    { // można lepiej
+        node->left = insert(node->left, item);
+    }
+    else
+    {
+        node->right = insert(node->right, item);
+    }
+    return node; // zwraca nowy korzeń
+}
+
+template <typename T>
+void RandomBinaryTree<T>::display(BSTNode<T> *node, int level)
+{
+    if (node == nullptr)
+        return;
+    display(node->right, level + 1);
+    std::cout << std::string(3 * level, ' ') << node->value << std::endl;
+    display(node->left, level + 1);
+}
+
+#endif
