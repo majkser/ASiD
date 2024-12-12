@@ -28,6 +28,7 @@ class RandomBinaryTree
     BSTNode<T> *root;
     BSTNode<T> *insert(BSTNode<T> *node, const T &item);
     void display(BSTNode<T> *node, int level);
+    T recurcive_calc_leaves(BSTNode<T> *node);
 
 public:
     RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
@@ -45,6 +46,8 @@ public:
     } // podgląd korzenia
     void insert(const T &item) { root = insert(root, item); }
     void display() { display(root, 0); }
+
+    T recurcive_calc_leaves() { return recurcive_calc_leaves(root); }
 };
 
 template <typename T>
@@ -73,6 +76,21 @@ void RandomBinaryTree<T>::display(BSTNode<T> *node, int level)
     display(node->right, level + 1);
     std::cout << std::string(3 * level, ' ') << node->value << std::endl;
     display(node->left, level + 1);
+}
+
+template <typename T>
+T RandomBinaryTree<T>::recurcive_calc_leaves(BSTNode<T> *node)
+{
+    if (!node)
+    {
+        return 0;
+    }
+    if (node->right == nullptr && node->left == nullptr)
+    {
+        return 1;
+    }
+
+    return recurcive_calc_leaves(node->left) + recurcive_calc_leaves(node->right);
 }
 
 #endif

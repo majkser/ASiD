@@ -17,4 +17,7 @@ int main()
     tree.insert(1);
 
     tree.display();
+
+    std::cout << std::endl
+              << "liczba lisci w drzewie obliczona rekurencyjnie: " << tree.recurcive_calc_leaves();
 }
