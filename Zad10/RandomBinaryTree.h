@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
+#include <stack>
 
 // Szablon dla przypadkowego drzewa binarnego.
 template <typename T>
@@ -29,6 +30,7 @@ class RandomBinaryTree
     BSTNode<T> *insert(BSTNode<T> *node, const T &item);
     void display(BSTNode<T> *node, int level);
     T recurcive_calc_leaves(BSTNode<T> *node);
+    T iterative_calc_leaves(BSTNode<T> *node);
 
 public:
     RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
@@ -48,6 +50,7 @@ public:
     void display() { display(root, 0); }
 
     T recurcive_calc_leaves() { return recurcive_calc_leaves(root); }
+    T iterative_calc_leaves() { return iterative_calc_leaves(root); }
 };
 
 template <typename T>
@@ -91,6 +94,36 @@ T RandomBinaryTree<T>::recurcive_calc_leaves(BSTNode<T> *node)
     }
 
     return recurcive_calc_leaves(node->left) + recurcive_calc_leaves(node->right);
+}
+
+template <typename T>
+T RandomBinaryTree<T>::iterative_calc_leaves(BSTNode<T> *node)
+{
+    std::stack<BSTNode<T> *> stack;
+    stack.push(root);
+    T result = 0;
+    while (!stack.empty())
+    {
+        node = stack.top();
+        stack.pop();
+
+        if (node->right == nullptr && node->left == nullptr)
+        {
+            result++;
+        }
+        else
+        {
+            if (node->right != nullptr)
+            {
+                stack.push(node->right);
+            }
+            if (node->left != nullptr)
+            {
+                stack.push(node->left);
+            }
+        }
+    }
+    return result;
 }
 
 #endif

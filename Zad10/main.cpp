@@ -20,4 +20,7 @@ int main()
 
     std::cout << std::endl
               << "liczba lisci w drzewie obliczona rekurencyjnie: " << tree.recurcive_calc_leaves();
+
+    std::cout << std::endl
+              << "liczba lisci w drzewie obliczona iteracyjnie: " << tree.iterative_calc_leaves();
 }
