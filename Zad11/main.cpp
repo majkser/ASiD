@@ -13,6 +13,10 @@ int main()
     tree.insert(13);
     tree.insert(10);
     tree.insert(5);
+    tree.insert(38);
 
     tree.display();
+
+    std::cout << "najmniejsza wartosc wynosi: " << *tree.find_min() << " i znajduje sie pod adresem: " << tree.find_min() << std::endl;
+    std::cout << "najwieksza wartosc wynosi: " << *tree.find_max() << " i znajduje sie pod adresem: " << tree.find_min() << std::endl;
 }
