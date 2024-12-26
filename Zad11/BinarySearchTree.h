@@ -33,6 +33,8 @@ class BinarySearchTree
     BSTNode<T> *insert(BSTNode<T> *node, const T &item);
     BSTNode<T> *search(BSTNode<T> *node, const T &item) const;
     void display(BSTNode<T> *node, int level);
+    T *find_min(BSTNode<T> *node);
+    T *find_max(BSTNode<T> *node);
 
 public:
     BinarySearchTree() : root(nullptr) {} // konstruktor domyślny
@@ -76,8 +78,8 @@ public:
         return nullptr;
     }
     void display() { display(root, 0); }
-    T *find_min();
-    T *find_max();
+    T *find_min() { return find_min(root); };
+    T *find_max() { return find_max(root); };
 };
 
 template <typename T>
@@ -123,6 +125,38 @@ void BinarySearchTree<T>::display(BSTNode<T> *node, int level)
     display(node->right, level + 1);
     std::cout << std::string(3 * level, ' ') << node->value << std::endl;
     display(node->left, level + 1);
+}
+
+template <typename T>
+T *BinarySearchTree<T>::find_min(BSTNode<T> *node)
+{
+    if (node == nullptr)
+    {
+        return nullptr;
+    };
+
+    while (node->left != nullptr)
+    {
+        node = node->left;
+    }
+
+    return &(node->value);
+}
+
+template <typename T>
+T *BinarySearchTree<T>::find_max(BSTNode<T> *node)
+{
+    if (node == nullptr)
+    {
+        return nullptr;
+    };
+
+    while (node->right != nullptr)
+    {
+        node = node->right;
+    }
+
+    return &(node->value);
 }
 
 #endif
