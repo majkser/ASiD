@@ -31,6 +31,8 @@ class RandomBinaryTree
     void display(BSTNode<T> *node, int level);
     T recurcive_calc_leaves(BSTNode<T> *node);
     T iterative_calc_leaves(BSTNode<T> *node);
+    T recursive_calc_total(BSTNode<T> *node);
+    T iterative_calc_total(BSTNode<T> *node);
 
 public:
     RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
@@ -51,6 +53,8 @@ public:
 
     T recurcive_calc_leaves() { return recurcive_calc_leaves(root); }
     T iterative_calc_leaves() { return iterative_calc_leaves(root); }
+    T recursive_calc_total() { return recursive_calc_total(root); }
+    T iterative_calc_total() { return iterative_calc_total(root); }
 };
 
 template <typename T>
@@ -123,6 +127,47 @@ T RandomBinaryTree<T>::iterative_calc_leaves(BSTNode<T> *node)
             }
         }
     }
+    return result;
+}
+
+template <typename T>
+T RandomBinaryTree<T>::recursive_calc_total(BSTNode<T> *node)
+{
+    if (!node)
+    {
+        return 0;
+    }
+    else
+    {
+        return node->value + recursive_calc_total(node->left) + recursive_calc_total(node->right);
+    }
+}
+
+template <typename T>
+T RandomBinaryTree<T>::iterative_calc_total(BSTNode<T> *node)
+{
+    std::stack<BSTNode<T> *> stack;
+    stack.push(root);
+    T result = 0;
+    while (!stack.empty())
+    {
+        node = stack.top();
+        stack.pop();
+
+        if (node)
+        {
+            result += node->value;
+        }
+        if (node->left != nullptr)
+        {
+            stack.push(node->left);
+        }
+        if (node->right != nullptr)
+        {
+            stack.push(node->right);
+        }
+    }
+
     return result;
 }
 

@@ -23,4 +23,11 @@ int main()
 
     std::cout << std::endl
               << "liczba lisci w drzewie obliczona iteracyjnie: " << tree.iterative_calc_leaves();
+
+    std::cout << std::endl
+              << "suma obliczona rekurencyjnie: " << tree.recursive_calc_total();
+    std::cout << std::endl
+              << "suma obliczona iteracyjnie: " << tree.iterative_calc_total() << std::endl;
+
+    return 0;
 }
