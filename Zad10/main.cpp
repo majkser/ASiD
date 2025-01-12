@@ -15,6 +15,7 @@ int main()
     tree.insert(7);
     tree.insert(9);
     tree.insert(1);
+    tree.insert(6);
 
     tree.display();
 
@@ -28,6 +29,10 @@ int main()
               << "suma obliczona rekurencyjnie: " << tree.recursive_calc_total();
     std::cout << std::endl
               << "suma obliczona iteracyjnie: " << tree.iterative_calc_total() << std::endl;
+    std::cout << "wysokosc obliczona rekurencyjnie: " << tree.recursive_calc_height() << std::endl;
+    std::cout << "wysokosc obliczona iteracyjnie: " << tree.iterative_calc_height() << std::endl;
+    std::cout << "ilosc wezlow obliczona iteracyjnie: " << tree.iterative_calc_nodes() << std::endl;
+    std::cout << "ilosc wezlow obliczona rekurencyjnie: " << tree.recursive_calc_nodes() << std::endl;
 
     return 0;
 }
